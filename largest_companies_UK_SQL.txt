@@ -122,9 +122,3 @@ sqlite> SELECT * FROM companies LIMIT 10;
 │ 9    │ 155              │ Barclays                 │ London       │ 30.17               │ 8.77               │ 1,874.94           │ 31.55             │ Banking         │
 │ 10   │ 181              │ Anglo American           │ London       │ 41.52               │ 8.54               │ 65.98              │ 59.44             │ Mining          │
 └──────┴──────────────────┴──────────────────────────┴──────────────┴─────────────────────┴────────────────────┴────────────────────┴───────────────────┴─────────────────┘
-sqlite> SELECT SUM(Revenue_billion_USD) AS Total_Revenue FROM companies;
-┌───────────────┐
-│ Total_Revenue │
-├───────────────┤
-│ 1780.05       │
-└───────────────┘
