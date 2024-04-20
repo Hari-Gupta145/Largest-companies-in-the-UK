@@ -1,0 +1,130 @@
+(base) harigupta@Haris-MacBook ~ % sqlite3 largest_companies_UK.db
+SQLite version 3.41.2 2023-03-22 11:56:21
+Enter ".help" for usage hints.
+sqlite> .mode column
+sqlite> .header ON
+sqlite> .separator ','
+sqlite> .tables
+sqlite> CREATE TABLE companies (Rank INTEGER,Forbes_2000_rank INTEGER,Name TEXT,Headquarters TEXT,Revenue_billion_USD REAL,Profit_billion_USD REAL,Assets_billion_USD REAL,Value_billion_USD REAL,Industry TEXT);
+sqlite> .mode csv
+sqlite> .import --skip 1 /Users/harigupta/Desktop/Data_science_for_Economics/empirical_project/largest_companies_UK.csv companies
+sqlite> .mode column 
+sqlite> SELECT * FROM companies LIMIT 10;
+Rank  Forbes_2000_rank  Name                      Headquarters  Revenue_billion_USD  Profit_billion_USD  Assets_billion_USD  Value_billion_USD  Industry       
+----  ----------------  ------------------------  ------------  -------------------  ------------------  ------------------  -----------------  ---------------
+1     16                Shell plc                 London        261.76               20.27               404.38              211.1              Oil and Gas    
+2     38                HSBC                      London        59.33                12.58               2,957.94            135.3              Banking        
+3     50                BP                        London        158.01               7.55                287.27              98.38              Oil and Gas    
+4     82                Rio Tinto                 London        63.46                21.06               102.9               117.78             Mining         
+5     96                Lloyds Banking Group      London        58.48                7.36                1,200.75            31.34              Banking        
+6     101               British American Tobacco  London        35.32                9.34                186.05              97.49              Consumer goods 
+7     125               Unilever                  London        62.0                 7.15                85.4                116.16             Consumer goods 
+8     129               GlaxoSmithKline           London        46.92                6.03                107.14              112.09             Pharmaceuticals
+9     155               Barclays                  London        30.17                8.77                1,874.94            31.55              Banking        
+10    181               Anglo American            London        41.52                8.54                65.98               59.44              Mining         
+sqlite> SELECT Industry, COUNT(*) AS NumberOfCompanies, SUM(Revenue_billion_USD) AS TotalRevenue FROM companies GROUP BY Industry ORDER BY NumberOfCompanies DESC;
+Industry                NumberOfCompanies  TotalRevenue
+----------------------  -----------------  ------------
+Insurance               7                  225.07      
+Retail                  4                  162.1       
+Mining                  4                  125.94      
+Consumer goods          4                  138.18      
+Banking                 4                  165.84      
+Telecommunication       3                  93.01       
+Services                3                  42.1        
+Finance                 3                  28.48       
+Utilities               2                  41.05       
+Pharmaceuticals         2                  85.6        
+Oil and Gas             2                  419.77      
+Chemicals               2                  76.94       
+Beverages               2                  35.24       
+Aerospace and defence   2                  42.28       
+Real estate             1                  0.75        
+Packaging materials     1                  13.59       
+Industrials             1                  33.43       
+Energy                  1                  10.33       
+Construction materials  1                  22.74       
+Advertising             1                  17.61       
+sqlite> SELECT Industry, COUNT(*) AS NumberOfCompanies, SUM(Revenue_billion_USD) AS TotalRevenue_billionsUS$ FROM companies GROUP BY Industry ORDER BY NumberOfCompanies DESC;
+Industry                NumberOfCompanies  TotalRevenue_billionsUS$
+----------------------  -----------------  ------------------------
+Insurance               7                  225.07                  
+Retail                  4                  162.1                   
+Mining                  4                  125.94                  
+Consumer goods          4                  138.18                  
+Banking                 4                  165.84                  
+Telecommunication       3                  93.01                   
+Services                3                  42.1                    
+Finance                 3                  28.48                   
+Utilities               2                  41.05                   
+Pharmaceuticals         2                  85.6                    
+Oil and Gas             2                  419.77                  
+Chemicals               2                  76.94                   
+Beverages               2                  35.24                   
+Aerospace and defence   2                  42.28                   
+Real estate             1                  0.75                    
+Packaging materials     1                  13.59                   
+Industrials             1                  33.43                   
+Energy                  1                  10.33                   
+Construction materials  1                  22.74                   
+Advertising             1                  17.61                   
+sqlite> SELECT Industry, COUNT(*) AS NumberOfCompanies, SUM(Revenue_billion_USD) AS TotalRevenue_billionsUS$ FROM companies GROUP BY Industry ORDER BY TotalRevenue_billionsUS$ DESC;
+Industry                NumberOfCompanies  TotalRevenue_billionsUS$
+----------------------  -----------------  ------------------------
+Oil and Gas             2                  419.77                  
+Insurance               7                  225.07                  
+Banking                 4                  165.84                  
+Retail                  4                  162.1                   
+Consumer goods          4                  138.18                  
+Mining                  4                  125.94                  
+Telecommunication       3                  93.01                   
+Pharmaceuticals         2                  85.6                    
+Chemicals               2                  76.94                   
+Aerospace and defence   2                  42.28                   
+Services                3                  42.1                    
+Utilities               2                  41.05                   
+Beverages               2                  35.24                   
+Industrials             1                  33.43                   
+Finance                 3                  28.48                   
+Construction materials  1                  22.74                   
+Advertising             1                  17.61                   
+Packaging materials     1                  13.59                   
+Energy                  1                  10.33                   
+Real estate             1                  0.75                    
+sqlite> SELECT * FROM companies LIMIT 10;
+Rank  Forbes_2000_rank  Name                      Headquarters  Revenue_billion_USD  Profit_billion_USD  Assets_billion_USD  Value_billion_USD  Industry       
+----  ----------------  ------------------------  ------------  -------------------  ------------------  ------------------  -----------------  ---------------
+1     16                Shell plc                 London        261.76               20.27               404.38              211.1              Oil and Gas    
+2     38                HSBC                      London        59.33                12.58               2,957.94            135.3              Banking        
+3     50                BP                        London        158.01               7.55                287.27              98.38              Oil and Gas    
+4     82                Rio Tinto                 London        63.46                21.06               102.9               117.78             Mining         
+5     96                Lloyds Banking Group      London        58.48                7.36                1,200.75            31.34              Banking        
+6     101               British American Tobacco  London        35.32                9.34                186.05              97.49              Consumer goods 
+7     125               Unilever                  London        62.0                 7.15                85.4                116.16             Consumer goods 
+8     129               GlaxoSmithKline           London        46.92                6.03                107.14              112.09             Pharmaceuticals
+9     155               Barclays                  London        30.17                8.77                1,874.94            31.55              Banking        
+10    181               Anglo American            London        41.52                8.54                65.98               59.44              Mining         
+sqlite> .mode fjkld
+Error: mode should be one of: ascii box column csv html insert json line list markdown qbox quote table tabs tcl
+sqlite> .mode box 
+sqlite> SELECT * FROM companies LIMIT 10;
+┌──────┬──────────────────┬──────────────────────────┬──────────────┬─────────────────────┬────────────────────┬────────────────────┬───────────────────┬─────────────────┐
+│ Rank │ Forbes_2000_rank │           Name           │ Headquarters │ Revenue_billion_USD │ Profit_billion_USD │ Assets_billion_USD │ Value_billion_USD │    Industry     │
+├──────┼──────────────────┼──────────────────────────┼──────────────┼─────────────────────┼────────────────────┼────────────────────┼───────────────────┼─────────────────┤
+│ 1    │ 16               │ Shell plc                │ London       │ 261.76              │ 20.27              │ 404.38             │ 211.1             │ Oil and Gas     │
+│ 2    │ 38               │ HSBC                     │ London       │ 59.33               │ 12.58              │ 2,957.94           │ 135.3             │ Banking         │
+│ 3    │ 50               │ BP                       │ London       │ 158.01              │ 7.55               │ 287.27             │ 98.38             │ Oil and Gas     │
+│ 4    │ 82               │ Rio Tinto                │ London       │ 63.46               │ 21.06              │ 102.9              │ 117.78            │ Mining          │
+│ 5    │ 96               │ Lloyds Banking Group     │ London       │ 58.48               │ 7.36               │ 1,200.75           │ 31.34             │ Banking         │
+│ 6    │ 101              │ British American Tobacco │ London       │ 35.32               │ 9.34               │ 186.05             │ 97.49             │ Consumer goods  │
+│ 7    │ 125              │ Unilever                 │ London       │ 62.0                │ 7.15               │ 85.4               │ 116.16            │ Consumer goods  │
+│ 8    │ 129              │ GlaxoSmithKline          │ London       │ 46.92               │ 6.03               │ 107.14             │ 112.09            │ Pharmaceuticals │
+│ 9    │ 155              │ Barclays                 │ London       │ 30.17               │ 8.77               │ 1,874.94           │ 31.55             │ Banking         │
+│ 10   │ 181              │ Anglo American           │ London       │ 41.52               │ 8.54               │ 65.98              │ 59.44             │ Mining          │
+└──────┴──────────────────┴──────────────────────────┴──────────────┴─────────────────────┴────────────────────┴────────────────────┴───────────────────┴─────────────────┘
+sqlite> SELECT SUM(Revenue_billion_USD) AS Total_Revenue FROM companies;
+┌───────────────┐
+│ Total_Revenue │
+├───────────────┤
+│ 1780.05       │
+└───────────────┘
