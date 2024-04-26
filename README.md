@@ -1,23 +1,23 @@
 # UK's Corporate Leaders of 2022: Insights from Forbes Global 2000
 
 ## Overview:
-This project aims to scrape and analyse data from wikipedia about the top firms in the UK according to the Forbes Global 2000 rankings from 2022. I've chosen this data as it is the first complete fiscal year since the Covid-19 pandemic and shows us how companies and industries in the UK will recover and grow in the future. The aim is to provide investors with a better idea of what the industry looks like now and how they could invest their money. 
+This project aims to scrape and analyse data from wikipedia about the top firms in the UK according to the Forbes Global 2000 rankings from 2022. I've chosen this data as it is the first complete fiscal year since the Covid-19 pandemic without restrictions and shows us how companies and industries in the UK will recover and grow in the future. The aim is to provide investors with a better idea of what the industry looks like now and how they could invest their money. 
 
 ## Set up 
-For this project JupyterNotebook was used through downloading anaconda and was all written on python3. `BeautifulSoup` which is used to parse HTML and XML documents. and `requests` which is used to send HTTP requests using Python.
+For this project Jupyter Notebook was used through downloading Anaconda and was all written on Python3. `BeautifulSoup` which is used to parse HTML and XML documents, and `requests` which is used to send HTTP requests using Python.
 
-To clean the data I have used sqlite3 to better visualise and manipulate the table of data, which can be seen on largest_companies_UK_SQL.txt. 
+To clean the data I have used SQLite3 to better visualise and manipulate the table of data, which can be seen on largest_companies_UK_SQL.txt. 
 
-Then to create the visualisations libraries that were used are: `pandas` used for data manipulation and analysis, `NumPy` used for large, multi-dimensional arrays and matrices, `Seaborn` which is a data visualisation library based on matplotlib, and finally `pyplot` which aids in plotting graphs and data visualisation.
+Then to create the visualisations libraries that were used include: `pandas` used for data manipulation and analysis, `NumPy` used for large, multi-dimensional arrays and matrices, `Seaborn` which is a data visualisation library based on matplotlib, and finally `pyplot` which aids in plotting graphs and data visualisation.
 
 ## Replicating 
 ### Web scraping
-This section will provide the steps taken to import the necessary libraries required to scrape the [Wikipedia](https://en.wikipedia.org/wiki/List_of_largest_companies_in_the_United_Kingdom) website **List of largest companies in the United Kingdom** and insert this into a pandas dataframe
+This section will provide the steps taken to import the necessary libraries required to scrape the [Wikipedia](https://en.wikipedia.org/wiki/List_of_largest_companies_in_the_United_Kingdom) webpage **List of largest companies in the United Kingdom** and insert this into a pandas dataframe
 
 #### Step 1: Import Libraries
 
 ```python
-from bs4 import Beautiful soup 
+from bs4 import BeautifulSoup 
 import requests
 ```
 
@@ -32,7 +32,7 @@ soup = BeautifulSoup(page.text, 'html')
 
 Set the variable `url` to the address of the webpage, in this case the "List of largest companies in the United Kingdom". 
 
-Then using the requests library sen the HTTP GET request to the URL that contains the HTML content of the webpage. This line creates an instance of the `BeautifulSoup` object. 
+Then using the requests library send the HTTP GET request to the URL that contains the HTML content of the webpage. This line creates an instance of the `BeautifulSoup` object. 
 
 The `soup` contains the parsed HTML, which allows for easier extraction and manipulation of data from the webpage.
 
@@ -43,7 +43,7 @@ soup.find('table', class = 'wikitable sotable')
 table = soup.find_all('table')[1]
 print(table)
 ```
-`soup.find` specifically looks for the firts table element in 'wikitable sortable'.
+`soup.find` specifically looks for the first table element in 'wikitable sortable'.
 
 the `.find_all` method to find a table tag in the HTML content. since all tables in the HTML are called 'wikitable sortable' we have to specify which table we want to extract data from. To use the second table on the webpage we use **[1]** in the second line to make sure we only get the data for the table called **2022 Forbes list** on the wikipedia page.
 
@@ -64,7 +64,7 @@ world_table_titles = [title.text.strip() for title in world_titles]
 
 print(world_table_titles)
 ```
-`for title in world_titles`  itterates through each element in world_titles. `title.text` this accesses the text content of `<th>` element. `.strip()` removes the trailing whitespace.
+`for title in world_titles`  iterates through each element in world_titles. `title.text` this accesses the text content of `<th>` element. `.strip()` removes the trailing whitespace.
  
 ### Creating a database and Formatting data
 #### Step 1: Import pandas
@@ -73,7 +73,7 @@ print(world_table_titles)
 import pandas as pd
 ```
 
-#### Step 2: Creating dataframe and inserting `world_table_titles`
+#### Step 2: Creating dataframe and inserting world_table_titles
 ```python
 df = pd.DataFrame(columns = world_table_titles)
 df
@@ -98,7 +98,7 @@ df.loc[length] = individual_row_data
 
 for each row in the loop, it finds all `<td>` elements within the row. And then `row_data` stores these `<td>` elements as a list. 
 
-`individual_row_data` uses a list comprehension to extract the text from each `<td>` element stored in row_data. The `.text` retrieves the sting inside each td element and '.string' again removes any whitespacefrom the strings.
+`individual_row_data` uses a list comprehension to extract the text from each `<td>` element stored in row_data. The `.text` retrieves the sting inside each `<td>` element and `.string` again removes any whitespacefrom the strings.
 
 `len(df)` calculates the number of rows curretly inside the dataframe which helps append the new data correctly. 
 
