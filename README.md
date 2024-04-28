@@ -1,4 +1,5 @@
 # UK's Corporate Leaders of 2022: Insights from Forbes Global 2000
+[Link to blog](https://hackmd.io/@MGE58p_2RwSzecO_aXdDrQ/UKs-Corporate-Leaders-of-2022)
 
 ## Overview:
 This project aims to scrape and analyse data from wikipedia about the top firms in the UK according to the Forbes Global 2000 rankings from 2022. I've chosen this data as it is the first complete fiscal year since the Covid-19 pandemic without restrictions and shows us how companies and industries in the UK will recover and grow in the future. The aim is to provide investors with a better idea of what the industry looks like now and how they could invest their money. 
