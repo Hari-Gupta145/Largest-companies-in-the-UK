@@ -367,4 +367,58 @@ sqlite> §
 Parse error: near "§": syntax error
   § ;
   ^--- error here
-sqlite> 
+sqlite> SELECT * FROM companies WHERE Industry = 'Insurance';
+Rank  Forbes_2000_rank  Name                  Headquarters  Revenue_billion_USD  Profit_billion_USD  Assets_billion_USD  Value_billion_USD  Industry 
+----  ----------------  --------------------  ------------  -------------------  ------------------  ------------------  -----------------  ---------
+12    240               Legal & General       London        62.51                2.79                779.43              19.63              Insurance
+26    501               Aviva                 London        45.13                0.57                465.18              21.03              Insurance
+27    540               Prudential            London        26.52                −1.98               189.35              36.7               Insurance
+28    557               Willis Towers Watson  London        9.58                 4.22                34.97               26.88              Insurance
+36    820               Phoenix Group         London        33.53                −1.18               440.48              7.93               Insurance
+37    826               St James's Place      Cirencester   24.42                0.39                210.82              9.31               Insurance
+41    921               M&G                   London        23.38                0.11                294.55              6.99               Insurance
+sqlite> SELECT Industry, SUM(Revenue_billion_USD) AS Total_Revenue, SUM(Assets_billion_USD) AS Total_Assets FROM companies GROUP BY Industry;
+Industry                Total_Revenue  Total_Assets
+----------------------  -------------  ------------
+Advertising             17.61          38.05       
+Aerospace and defence   42.28          75.59       
+Banking                 165.84         5.0         
+Beverages               35.24          77.99       
+Chemicals               76.94          118.35      
+Construction materials  22.74          14.1        
+Consumer goods          138.18         347.17      
+Energy                  10.33          31.56       
+Finance                 28.48          845.44      
+Industrials             33.43          49.42       
+Insurance               225.07         2414.78     
+Mining                  125.94         196.01      
+Oil and Gas             419.77         691.65      
+Packaging materials     13.59          17.14       
+Pharmaceuticals         85.6           212.5       
+Real estate             0.75           24.09       
+Retail                  162.1          140.19      
+Services                42.1           53.6        
+Telecommunication       93.01          295.06      
+Utilities               41.05          156.61            
+sqlite> SELECT Industry, SUM(Revenue_billion_USD) AS Total_Revenue, SUM(Assets_billion_USD) AS Total_Assets FROM companies WHERE Industry IN ('Oil and Gas', 'Telecommunication', 'Pharmaceuticals', 'Banking', 'Consumer goods')
+GROUP BY Industry;
+Industry           Total_Revenue  Total_Assets
+-----------------  -------------  ------------
+Banking            165.84         5.0         
+Consumer goods     138.18         347.17      
+Oil and Gas        419.77         691.65      
+Pharmaceuticals    85.6           212.5       
+Telecommunication  93.01          295.06      
+sqlite> SELECT Industry, 
+       SUM(Revenue_billion_USD) AS Total_Revenue, 
+       SUM(Profit_billion_USD) AS Total_Profits
+FROM companies
+WHERE Industry IN ('Oil and Gas', 'Telecommunication', 'Pharmaceuticals', 'Banking', 'Consumer goods')
+GROUP BY Industry;
+Industry           Total_Revenue  Total_Profits
+-----------------  -------------  -------------
+Banking            165.84         33.12        
+Consumer goods     138.18         20.37        
+Oil and Gas        419.77         27.82        
+Pharmaceuticals    85.6           6.12         
+Telecommunication  93.01          14.86    
